@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  buddy-finder:
+    build: .
+    container_name: buddy-finder-app
+    ports:
+      - "${SERVER_PORT}:8080"
+    environment:
+      - MONGO_DB_URI=${MONGO_DB_URI}
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      - SERVER_PORT=${SERVER_PORT}
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+    networks:
+      - buddy-net
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo-db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - buddy-net
+
+volumes:
+  mongo_data:
+
+networks:
+  buddy-net:
+    driver: bridge
