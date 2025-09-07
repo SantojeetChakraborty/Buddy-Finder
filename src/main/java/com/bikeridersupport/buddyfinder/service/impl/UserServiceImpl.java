@@ -25,7 +25,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(UserRequest userRequest) {
         AppUser user = modelMapper.map(userRequest,AppUser.class);
-        user.setRole(Role.APP_USER);
         appUserRepository.save(user);
     }
 
