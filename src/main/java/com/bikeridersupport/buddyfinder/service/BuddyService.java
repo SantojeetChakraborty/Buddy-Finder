@@ -9,4 +9,5 @@ public interface BuddyService {
     void saveBuddy(BuddyRequest buddyRequest);
     BuddyResponse getBuddyById(String id);
     List<BuddyResponse> getAllBuddy();
+    void updateBuddyById(BuddyRequest buddyRequest,String id);
 }

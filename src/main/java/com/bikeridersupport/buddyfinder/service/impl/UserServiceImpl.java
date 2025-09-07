@@ -1,9 +1,8 @@
 package com.bikeridersupport.buddyfinder.service.impl;
 
 
-import com.bikeridersupport.buddyfinder.model.BaseUser;
+import com.bikeridersupport.buddyfinder.model.AppUser;
 import com.bikeridersupport.buddyfinder.model.Role;
-import com.bikeridersupport.buddyfinder.model.User;
 import com.bikeridersupport.buddyfinder.model.dto.UserRequest;
 import com.bikeridersupport.buddyfinder.model.dto.UserResponse;
 import com.bikeridersupport.buddyfinder.repository.UserRepository;
@@ -21,10 +20,11 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository appUserRepository;
     private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
 
     @Override
     public void saveUser(UserRequest userRequest) {
-        User user = modelMapper.map(userRequest,User.class);
+        AppUser user = modelMapper.map(userRequest,AppUser.class);
         user.setRole(Role.APP_USER);
         appUserRepository.save(user);
     }
@@ -38,8 +38,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getUserById(String id) {
-        User user = appUserRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("User not found with ID :" +id));
+        AppUser user = appUserRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("AppUser not found with ID :" +id));
         return modelMapper.map(user,UserResponse.class);
+    }
+
+    @Override
+    public void updateUser(UserRequest userRequest,String id) {
+        AppUser user = appUserRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("AppUser not found with ID :" +id));
+        user.setUsername(userRequest.getUsername());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(userRequest.getPassword());
+        userRepository.save(user);
     }
 }

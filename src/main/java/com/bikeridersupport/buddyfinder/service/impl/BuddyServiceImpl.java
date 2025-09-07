@@ -1,11 +1,9 @@
 package com.bikeridersupport.buddyfinder.service.impl;
 
-import com.bikeridersupport.buddyfinder.model.BaseUser;
-import com.bikeridersupport.buddyfinder.model.Buddy;
+import com.bikeridersupport.buddyfinder.model.BuddyUser;
 import com.bikeridersupport.buddyfinder.model.dto.BuddyRequest;
 import com.bikeridersupport.buddyfinder.model.dto.BuddyResponse;
 import com.bikeridersupport.buddyfinder.repository.BuddyRepository;
-import com.bikeridersupport.buddyfinder.repository.UserRepository;
 import com.bikeridersupport.buddyfinder.service.BuddyService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,20 +20,30 @@ public class BuddyServiceImpl implements BuddyService {
 
     @Override
     public void saveBuddy(BuddyRequest buddyRequest) {
-        buddyRepository.save(modelMapper.map(buddyRequest, Buddy.class));
+        buddyRepository.save(modelMapper.map(buddyRequest, BuddyUser.class));
     }
 
     @Override
     public BuddyResponse getBuddyById(String id) {
-        Buddy buddy = buddyRepository.findById(id)
+        BuddyUser buddyUser = buddyRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("Buddy not found with ID :"+id));
-        return modelMapper.map(buddy,BuddyResponse.class);
+        return modelMapper.map(buddyUser,BuddyResponse.class);
     }
 
     @Override
     public List<BuddyResponse> getAllBuddy() {
         return buddyRepository.findAll().stream()
-                .map(buddy->modelMapper.map(buddy, BuddyResponse.class))
+                .map(buddyUser ->modelMapper.map(buddyUser, BuddyResponse.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateBuddyById(BuddyRequest buddyRequest, String id) {
+        BuddyUser buddyUser = buddyRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Buddy not found with ID :" +id));
+        buddyUser.setUsername(buddyRequest.getUsername());
+        buddyUser.setEmail(buddyRequest.getEmail());
+        buddyUser.setPassword(buddyRequest.getPassword());
+        buddyRepository.save(buddyUser);
     }
 }

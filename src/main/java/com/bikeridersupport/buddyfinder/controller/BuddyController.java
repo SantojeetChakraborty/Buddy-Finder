@@ -32,4 +32,11 @@ public class BuddyController {
     public ResponseEntity<BuddyResponse> getBuddyById(@PathVariable @Valid String id){
         return new ResponseEntity<>(buddyService.getBuddyById(id), HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateBuddyById(@RequestBody BuddyRequest buddyRequest,
+                                                 @PathVariable @Valid String id){
+        //buddyRequest.updateBuddy(buddyRequest,id);
+        return new ResponseEntity<>("User updated successfully",HttpStatus.OK);
+    }
 }
