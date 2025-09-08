@@ -1,5 +1,6 @@
 package com.bikeridersupport.buddyfinder.controller;
 
+import com.bikeridersupport.buddyfinder.model.AppUser;
 import com.bikeridersupport.buddyfinder.model.dto.UserRequest;
 import com.bikeridersupport.buddyfinder.model.dto.UserResponse;
 import com.bikeridersupport.buddyfinder.service.impl.UserServiceImpl;
@@ -7,6 +8,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,5 +42,11 @@ public class AppUserController {
                                                  @PathVariable @Valid String id){
         appUserService.updateUser(userRequest,id);
         return new ResponseEntity<>("User updated successfully",HttpStatus.OK);
+    }
+
+    @GetMapping("/profile")
+    @PreAuthorize("hasRole('APP_USER')")
+    public ResponseEntity<AppUser> getProfile(@AuthenticationPrincipal AppUser currentUser) {
+        return ResponseEntity.ok(currentUser);
     }
 }
