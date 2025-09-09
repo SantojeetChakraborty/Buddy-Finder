@@ -16,5 +16,8 @@ public class BuddyUser extends BaseUser{
 
     BuddyStatus currentStatus = BuddyStatus.CLOSED;
 
-    Role role = Role.BUDDY;
+    @Override
+    public Role getRole() {
+        return Role.BUDDY;
+    }
 }
