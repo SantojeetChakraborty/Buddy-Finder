@@ -28,6 +28,7 @@ public class AppUserController {
     }
 
     @GetMapping()
+    @PreAuthorize("hasRole('APP_USER')")
     public ResponseEntity<List<UserResponse>> getAllUsers(){
         return new ResponseEntity<>(appUserService.getAllAppUsers(), HttpStatus.OK);
     }

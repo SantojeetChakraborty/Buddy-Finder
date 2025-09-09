@@ -57,9 +57,9 @@ public class SecurityFilter {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/api/public/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/api/app/**").hasAuthority("APP_USER")
-                        .requestMatchers("/api/buddy/**").hasAuthority("BUDDY")
-                        .requestMatchers("/api/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/users/**").hasRole("APP_USER")
+                        .requestMatchers("/api/buddy/**").hasRole("BUDDY")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

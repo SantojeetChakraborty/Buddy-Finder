@@ -59,9 +59,6 @@ public class AuthServiceImpl implements AuthService {
         return buildAuthResponse(appUser, token, "App user registered successfully");
     }
 
-    /**
-     * Register a Buddy User
-     */
     public AuthResponse registerBuddy(RegisterRequest request) {
         validateUserUniqueness(request);
 
