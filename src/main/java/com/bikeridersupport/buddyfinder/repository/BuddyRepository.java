@@ -4,4 +4,8 @@ import com.bikeridersupport.buddyfinder.model.BuddyUser;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface BuddyRepository extends MongoRepository<BuddyUser,String> {
+    BuddyUser findByUsername(String username);
+    BuddyUser findByEmail(String email);
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
 }
