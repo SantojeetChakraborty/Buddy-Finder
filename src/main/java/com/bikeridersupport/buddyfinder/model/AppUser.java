@@ -2,6 +2,8 @@ package com.bikeridersupport.buddyfinder.model;
 
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -10,12 +12,12 @@ import java.util.List;
 @Document(collection = "app_users")
 public class AppUser extends BaseUser{
 
-    Address currentLocation;
-    Booking currentBooking;
-    List<Address> locations;
-    List<Booking> bookingHistory;
-    Vehicle currentVehicle;
-    List<Vehicle> myVehicles;
+    Address currentLocation = new Address();
+    Booking currentBooking = new Booking();
+    List<Address> locations = new ArrayList<>();
+    List<Booking> bookingHistory = new ArrayList<>();
+    Vehicle currentVehicle = new Vehicle();
+    List<Vehicle> myVehicles = new ArrayList<>();
     Role role;
 
     @Override
